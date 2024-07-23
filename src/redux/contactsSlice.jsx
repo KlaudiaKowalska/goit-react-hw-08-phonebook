@@ -1,28 +1,46 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASE_URL = "https://6693d743c6be000fa07d5f4c.mockapi.io/api/v1";
+const BASE_URL = "https://connections-api.goit.global";
 
 export const fetchContacts = createAsyncThunk(
   "contacts/fetchContacts",
-  async () => {
-    const response = await axios.get(`${BASE_URL}/contacts`);
+  async (_, { getState }) => {
+    const state = getState();
+    const token = state.auth.token;
+    const response = await axios.get(`${BASE_URL}/contacts`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   },
 );
 
 export const addContact = createAsyncThunk(
   "contacts/addContact",
-  async (contact) => {
-    const response = await axios.post(`${BASE_URL}/contacts`, contact);
+  async (contact, { getState }) => {
+    const state = getState();
+    const token = state.auth.token;
+    const response = await axios.post(`${BASE_URL}/contacts`, contact, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   },
 );
 
 export const removeContact = createAsyncThunk(
   "contacts/removeContact",
-  async (contactId) => {
-    await axios.delete(`${BASE_URL}/contacts/${contactId}`);
+  async (contactId, { getState }) => {
+    const state = getState();
+    const token = state.auth.token;
+    await axios.delete(`${BASE_URL}/contacts/${contactId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return contactId;
   },
 );

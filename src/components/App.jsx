@@ -1,25 +1,40 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import ContactForm from "./ContactForm/ContactForm";
-import ContactList from "./ContactList/ContactList";
-import Filter from "./Filter/Filter";
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import Register from "./Register/Register";
+import Login from "./Login/Login";
+import Contacts from "./Contacts/Contacts";
+import Navigation from "./Navigation/Navigation";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
+import styles from "./App.module.scss";
 
-function App() {
-  const contacts = useSelector((state) => state.contacts);
-
-  useEffect(() => {
-    localStorage.setItem("contacts", JSON.stringify(contacts));
-  }, [contacts]);
-
+const App = () => {
   return (
-    <div>
-      <h1>Phonebook</h1>
-      <ContactForm />
-      <h2>Contacts</h2>
-      <Filter />
-      <ContactList />
-    </div>
+    <Router basename="/goit-react-hw-08-phonebook">
+      {" "}
+      {/* Bazowa ścieżka */}
+      <div className={styles.app}>
+        <Navigation />
+        <Routes>
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/contacts"
+            element={
+              <PrivateRoute>
+                <Contacts />
+              </PrivateRoute>
+            }
+          />
+          <Route path="/" element={<Navigate to="/login" />} />
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
