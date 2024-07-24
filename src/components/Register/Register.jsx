@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import styles from "./Register.module.scss";
+import { Box, Input, Button, FormControl, FormLabel } from "@chakra-ui/react";
 
 const Register = () => {
   const [state, setState] = useState({ name: "", email: "", password: "" });
@@ -15,15 +15,10 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
+      await axios.post(
         "https://connections-api.goit.global/users/signup",
-        {
-          name: state.name.trim(),
-          email: state.email.trim(),
-          password: state.password.trim(),
-        },
+        state,
       );
-      console.log("Registration successful:", response.data);
       navigate("/login");
     } catch (error) {
       console.error(
@@ -35,33 +30,46 @@ const Register = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
-      <input
-        type="text"
-        name="name"
-        value={state.name}
-        onChange={handleChange}
-        placeholder="Name"
-        required
-      />
-      <input
-        type="email"
-        name="email"
-        value={state.email}
-        onChange={handleChange}
-        placeholder="Email"
-        required
-      />
-      <input
-        type="password"
-        name="password"
-        value={state.password}
-        onChange={handleChange}
-        placeholder="Password"
-        required
-      />
-      <button type="submit">Register</button>
-    </form>
+    <Box maxW="md" mx="auto" mt="8">
+      <form onSubmit={handleSubmit}>
+        <FormControl mb="4">
+          <FormLabel>Name</FormLabel>
+          <Input
+            type="text"
+            name="name"
+            value={state.name}
+            onChange={handleChange}
+            placeholder="Name"
+            required
+          />
+        </FormControl>
+        <FormControl mb="4">
+          <FormLabel>Email</FormLabel>
+          <Input
+            type="email"
+            name="email"
+            value={state.email}
+            onChange={handleChange}
+            placeholder="Email"
+            required
+          />
+        </FormControl>
+        <FormControl mb="4">
+          <FormLabel>Password</FormLabel>
+          <Input
+            type="password"
+            name="password"
+            value={state.password}
+            onChange={handleChange}
+            placeholder="Password"
+            required
+          />
+        </FormControl>
+        <Button type="submit" colorScheme="teal">
+          Register
+        </Button>
+      </form>
+    </Box>
   );
 };
 

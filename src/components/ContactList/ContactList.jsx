@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ContactListItem from "../ContactListItem/ContactListItem";
 import { removeContact, fetchContacts } from "../../redux/contactsSlice";
-import PropTypes from "prop-types";
+import { List } from "@chakra-ui/react";
 
 const ContactList = () => {
   const contacts = useSelector((state) => state.contacts);
@@ -18,7 +18,7 @@ const ContactList = () => {
   );
 
   return (
-    <ul>
+    <List spacing={3}>
       {filteredContacts.map((contact) => (
         <ContactListItem
           key={contact.id}
@@ -26,20 +26,8 @@ const ContactList = () => {
           removeContact={() => dispatch(removeContact(contact.id))}
         />
       ))}
-    </ul>
+    </List>
   );
-};
-
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    }),
-  ),
-  filter: PropTypes.string,
-  removeContact: PropTypes.func,
 };
 
 export default ContactList;

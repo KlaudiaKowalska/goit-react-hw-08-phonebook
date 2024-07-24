@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import styles from "./Login.module.scss";
 import { loginSuccess } from "../../redux/authSlice";
+import { Box, Input, Button, FormControl, FormLabel } from "@chakra-ui/react";
 
 const Login = () => {
   const [state, setState] = useState({ name: "", email: "", password: "" });
@@ -47,32 +47,35 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
-      <input
-        type="text"
-        name="name"
-        value={state.name}
-        onChange={handleChange}
-        placeholder="Name (optional)"
-      />
-      <input
-        type="email"
-        name="email"
-        value={state.email}
-        onChange={handleChange}
-        placeholder="Email"
-        required
-      />
-      <input
-        type="password"
-        name="password"
-        value={state.password}
-        onChange={handleChange}
-        placeholder="Password"
-        required
-      />
-      <button type="submit">Login</button>
-    </form>
+    <Box maxW="md" mx="auto" mt="8">
+      <form onSubmit={handleSubmit}>
+        <FormControl mb="4">
+          <FormLabel>Email</FormLabel>
+          <Input
+            type="email"
+            name="email"
+            value={state.email}
+            onChange={handleChange}
+            placeholder="Email"
+            required
+          />
+        </FormControl>
+        <FormControl mb="4">
+          <FormLabel>Password</FormLabel>
+          <Input
+            type="password"
+            name="password"
+            value={state.password}
+            onChange={handleChange}
+            placeholder="Password"
+            required
+          />
+        </FormControl>
+        <Button type="submit" colorScheme="teal">
+          Login
+        </Button>
+      </form>
+    </Box>
   );
 };
 

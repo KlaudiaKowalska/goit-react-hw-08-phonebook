@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setFilter } from "../../redux/filterSlice";
-import PropTypes from "prop-types";
+import { Input } from "@chakra-ui/react";
 
 const Filter = () => {
   const filter = useSelector((state) => state.filter);
@@ -12,18 +12,15 @@ const Filter = () => {
   };
 
   return (
-    <input
+    <Input
       type="text"
       value={filter}
       onChange={handleFilterChange}
       placeholder="Search by name"
+      mt="4"
+      mb="4"
     />
   );
-};
-
-Filter.propTypes = {
-  filter: PropTypes.string,
-  setFilter: PropTypes.func,
 };
 
 export default Filter;

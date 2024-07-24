@@ -10,14 +10,12 @@ import Login from "./Login/Login";
 import Contacts from "./Contacts/Contacts";
 import Navigation from "./Navigation/Navigation";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
-import styles from "./App.module.scss";
+import { ChakraProvider } from "@chakra-ui/react";
 
 const App = () => {
   return (
-    <Router basename="/goit-react-hw-08-phonebook">
-      {" "}
-      {/* Bazowa ścieżka */}
-      <div className={styles.app}>
+    <ChakraProvider>
+      <Router basename="/goit-react-hw-08-phonebook">
         <Navigation />
         <Routes>
           <Route path="/register" element={<Register />} />
@@ -32,8 +30,8 @@ const App = () => {
           />
           <Route path="/" element={<Navigate to="/login" />} />
         </Routes>
-      </div>
-    </Router>
+      </Router>
+    </ChakraProvider>
   );
 };
 

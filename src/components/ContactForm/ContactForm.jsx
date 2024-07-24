@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addContact } from "../../redux/contactsSlice";
-import styles from "./ContactForm.module.scss";
+import { Box, Button, Input, FormControl, FormLabel } from "@chakra-ui/react";
 
 const ContactForm = () => {
   const [state, setState] = useState({ name: "", number: "" });
@@ -43,48 +43,52 @@ const ContactForm = () => {
     }
 
     if (!validatePhoneNumber(state.number)) {
-      alert("Nieprawidłowy format numeru telefonu.");
+      alert(
+        "Numer telefonu jest nieprawidłowy. Upewnij się, że używasz poprawnego formatu.",
+      );
       return;
     }
 
-    dispatch(
-      addContact({
-        name: state.name.trim(),
-        number: state.number.trim(),
-      }),
-    );
+    dispatch(addContact(state));
     setState({ name: "", number: "" });
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
-      <p className={styles.paragraphForm}>Imię</p>
-      <input
-        type="text"
-        name="name"
-        value={state.name}
-        onChange={handleChange}
-        placeholder="Imię"
-        pattern="^[a-zA-Zа-яА-Я '-]+$"
-        title="Imię może zawierać tylko litery, apostrof, myślnik i spacje. Na przykład Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-        required
-      />
-      <p className={styles.paragraphForm}>Numer</p>
-      <input
-        type="tel"
-        name="number"
-        value={state.number}
-        onChange={handleChange}
-        inputMode="numeric"
-        pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-        title="Numer telefonu musi być cyfrą i może zawierać spacje, myślniki, nawiasy i może zaczynać się od +"
-        placeholder="Numer Telefonu"
-        required
-      />
-      <button type="submit" className={styles.buttonForm}>
-        Dodaj Kontakt
-      </button>
-    </form>
+    <Box
+      as="form"
+      onSubmit={handleSubmit}
+      maxW="sm"
+      margin="auto"
+      mt="5"
+      p="5"
+      borderWidth="1px"
+      borderRadius="lg">
+      <FormControl>
+        <FormLabel>Name</FormLabel>
+        <Input
+          type="text"
+          name="name"
+          value={state.name}
+          onChange={handleChange}
+          placeholder="Name"
+          required
+        />
+      </FormControl>
+      <FormControl mt="4">
+        <FormLabel>Number</FormLabel>
+        <Input
+          type="tel"
+          name="number"
+          value={state.number}
+          onChange={handleChange}
+          placeholder="Number"
+          required
+        />
+      </FormControl>
+      <Button type="submit" colorScheme="teal" mt="4" width="full">
+        Add contact
+      </Button>
+    </Box>
   );
 };
 
